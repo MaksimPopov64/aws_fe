@@ -12,6 +12,7 @@ import PageCart from "components/pages/PageCart/PageCart";
 import PageOrders from "components/pages/PageOrders/PageOrders";
 import PageOrder from "components/pages/PageOrder/PageOrder";
 import PageProductImport from "components/pages/admin/PageProductImport/PageProductImport";
+import PageProduct from "components/pages/PageProduct/PageProduct";
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
             <Route exact path="/">
               <PageProducts/>
             </Route>
+            <Route exact path="/product/:id" render={routeProps => ( <PageProduct match={routeProps.match.params.id} index={routeProps} />)} />             
             <Route exact path={["/admin/product-form/:id", '/admin/product-form']}>
               <PageProductForm/>
             </Route>

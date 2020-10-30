@@ -9,6 +9,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import {Product} from "models/Product";
 import {formatAsPrice} from "utils/utils";
 import AddProductToCart from "components/AddProductToCart/AddProductToCart";
+import {Link} from 'react-router-dom';
 import axios from 'axios';
 import API_PATHS from "constants/apiPaths";
 
@@ -35,34 +36,36 @@ export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    axios.get(API_PATHS.product)
+    axios.get(API_PATHS.products)
       .then(res => setProducts(res.data.default));    
   }, [])
 
   return (
     <Grid container spacing={4}>
-      {products.map((product: Product, index: number) => (
-        <Grid item key={product.id} xs={12} sm={6} md={4}>
-          <Card className={classes.card}>
-            <CardMedia
-              className={classes.cardMedia}
-              image={`https://source.unsplash.com/random?sig=${index}`}
-              title="Image title"
-            />
-            <CardContent className={classes.cardContent}>
-              <Typography gutterBottom variant="h5" component="h2">
-                {product.title}
-              </Typography>
-              <Typography>
-                {formatAsPrice(product.price)}
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <AddProductToCart product={product}/>
-            </CardActions>
-          </Card>
-        </Grid>
-      ))}
-    </Grid>
+      {products.map((product: Product, index: number) => (        
+          <Grid item key={product.id} xs={12} sm={6} md={4}>
+            <Link to={{pathname: `/product/${product.id}`, state: {index}}}>
+              <Card className={classes.card}>
+                <CardMedia
+                  className={classes.cardMedia}
+                  image={`https://source.unsplash.com/random?sig=${index}`}
+                  title="Image title"
+                />
+                <CardContent className={classes.cardContent}>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    {product.title}
+                  </Typography>
+                  <Typography>
+                    {formatAsPrice(product.price)}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <AddProductToCart product={product}/>
+                </CardActions>
+              </Card>
+            </Link>
+          </Grid>        
+      ))} 
+    </Grid>   
   );
 }
