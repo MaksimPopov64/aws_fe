@@ -19,12 +19,13 @@ export const cartSlice = createSlice({
     addToCart: (state, action: PayloadAction<Product>) => {
       const {items} = state;
       const {payload: product} = action;
+      const quantity = product.count;
       const existingItem = items.find(i => i.product.id === product.id);
-      if (existingItem) {
+      if (existingItem && (quantity > existingItem.count) ) {
         existingItem.count++;
         return;
       }
-      items.push({product, count: 1});
+      quantity > 0 && items.push({product, count: 1});
     },
     // Use the PayloadAction type to declare the contents of `action.payload`
     removeFromCart: (state, action: PayloadAction<Product>) => {

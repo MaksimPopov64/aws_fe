@@ -37,18 +37,18 @@ type IProps = {
 export const ProductLayout:React.FC<IProps> = ({id}: any, {index}: any) => {
   const classes = useStyles();
   const [product, setProducts] = useState<Product>(
-    {id: '',
-    title: '',
-    description: '',
-    price: 0});
-
-    console.log(index, id);
-  
+    {
+      id: '',
+      title: '',
+      description: '',
+      price: 0,
+      count: 0,
+    });  
 
   useEffect(() => {
-    axios.get(`${API_PATHS.product}${id}`).then((res) => setProducts(res.data.item));
+    axios.get(`${API_PATHS.product}${id}`).then((res) => { console.log(res);setProducts(res.data.product)});
   }, []);
-
+ 
   return (   
       <Card className={classes.card}>
         <CardMedia className={classes.cardMedia} image={`https://source.unsplash.com/random?sig=${index}`} title='Image title' />
